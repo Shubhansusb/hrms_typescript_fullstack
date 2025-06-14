@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id           String       @id @default(uuid())
+  name         String
+  email        String       @unique
+  password     String
+  role         String       @default("Employee")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  leaves       Leave[]
+  attendances  Attendance[]
+  dailyReports DailyReport[]
+  profileImage String?
+  marksheets   String?
+  aadharCard   String?
+  panCard      String?
+}
+
+model Leave {
+  id        String   @id @default(uuid())
+  employeeId String
+  startDate DateTime
+  endDate   DateTime
+  reason    String
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  employee  Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model Attendance {
+  id        String   @id @default(uuid())
+  employeeId String
+  punchIn   DateTime
+  punchOut  DateTime?
+  createdAt DateTime @default(now())
+  employee  Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model DailyReport {
+  id          String   @id @default(uuid())
+  employeeId  String
+  reportDate  DateTime
+  description String
+  screenshot1 String?
+  screenshot2 String?
+  screenshot3 String?
+  createdAt   DateTime @default(now())
+  employee    Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f9fafb; /* Matches the light gray background used in components */
+}
+
+/* Ensure Tailwind's dark mode works */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #111827; /* Matches the dark gray background used in components */
+  }
+}
